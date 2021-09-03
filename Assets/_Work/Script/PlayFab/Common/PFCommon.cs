@@ -45,11 +45,13 @@ namespace PF
             this.result = null;
             this.error = error;
             _hasRequest = true;
+
+            Logger.Log(error.GenerateErrorReport(), typeof(T).Name);
         }
 
         bool CheckTimeOut()
         {
-            if (Time.time - _timeStamp < GlobalSettings.PF_REQUEST_TIMEOUT)
+            if (Time.time - _timeStamp > GlobalSettings.PF_REQUEST_TIMEOUT)
             {
                 Sig(PFCommon.TimeOutError);
                 return false;

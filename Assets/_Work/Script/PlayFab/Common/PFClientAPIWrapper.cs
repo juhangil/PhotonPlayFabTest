@@ -1,9 +1,7 @@
-using UnityEngine;
-
 using PlayFab;
 using PlayFab.ClientModels;
 
-namespace PF.API
+namespace PF
 {
     public static class PFClient
     {
