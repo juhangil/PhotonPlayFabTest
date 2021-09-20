@@ -12,9 +12,9 @@ using PF;
 public class AuthManager : SingletonMonoBehaviour<AuthManager>
 {
     public bool IsPlayFabLogin => PlayFabSettings.staticPlayer.IsClientLoggedIn();
-    public bool HasPhotonAuth => photonAuth != null;
+    public bool HasPhotonAuth => _photonAuth != null;
 
-    AuthenticationValues photonAuth = null;
+    AuthenticationValues _photonAuth = null;
 
     public void ProcessLogin(Action onError = null) => Coroutiner.Start(_LoginPhoton(onError));
 
@@ -32,14 +32,14 @@ public class AuthManager : SingletonMonoBehaviour<AuthManager>
 
             if (phToken.IsSucceed)
             {
-                photonAuth = new AuthenticationValues { AuthType = CustomAuthenticationType.Custom };
+                _photonAuth = new AuthenticationValues { AuthType = CustomAuthenticationType.Custom };
 
-                photonAuth.AddAuthParameter("username", PlayFabSettings.staticPlayer.PlayFabId);
-                photonAuth.AddAuthParameter("token", phToken.result.PhotonCustomAuthenticationToken);
+                _photonAuth.AddAuthParameter("username", PlayFabSettings.staticPlayer.PlayFabId);
+                _photonAuth.AddAuthParameter("token", phToken.result.PhotonCustomAuthenticationToken);
 
-                PhotonNetwork.AuthValues = photonAuth;
+                PhotonNetwork.AuthValues = _photonAuth;
 
-                Logger.DataLog(photonAuth, "Photon Auth");
+                Logger.DataLog(_photonAuth, "Photon Auth");
             }
         }
 
